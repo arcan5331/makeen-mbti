@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group([
+    'controller' => \App\Http\Controllers\User\AuthController::class
+], function () {
+    Route::post('register', 'registerUser');
+    Route::post('validate-email', 'emailConfirmation');
+});
