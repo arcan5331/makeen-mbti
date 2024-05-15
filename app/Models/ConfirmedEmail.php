@@ -21,7 +21,8 @@ class ConfirmedEmail extends Model
 
     public function generateCode(): string
     {
-        $code = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
+        $code = config('app.env') == 'production' ?
+            str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT) : '1234';
         $this->forceFill(['code' => $code])->save();
         return $code;
     }
