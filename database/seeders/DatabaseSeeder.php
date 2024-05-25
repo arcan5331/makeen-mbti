@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Test;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,5 +20,13 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $mbtiJson = json_decode(File::get(database_path('seeders/mbti.json')));
+        Test::create([
+            'name' => 'mbti',
+            'questions' => $mbtiJson->questions,
+            'answers' => $mbtiJson->answers,
+            'types_data' => $mbtiJson->types_data
+        ]);
     }
 }
