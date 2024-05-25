@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
+            $table->string('name')->unique();
             $table->json('questions');
             $table->json('answers');
             $table->json('types_data');
