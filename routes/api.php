@@ -24,3 +24,12 @@ Route::group([
     Route::post('register', 'registerUser');
     Route::post('validate-email', 'emailConfirmation');
 });
+
+Route::group([
+    "middleware" => ['auth:sanctum'],
+    'prefix' => 'test',
+    'controller' => \App\Http\Controllers\TestControlLer::class,
+], function () {
+    Route::get('{test_name}', 'show');
+    Route::post('{test_name}', 'fill');
+});
