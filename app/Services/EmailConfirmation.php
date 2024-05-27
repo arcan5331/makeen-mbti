@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\ConfirmationCodeNotCorrectException;
 use App\Models\ConfirmedEmail;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\MultipleRecordsFoundException;
 
@@ -57,5 +58,10 @@ class EmailConfirmation
     protected function sendValidationEmail($code)
     {
         //TODO: make the mailing function
+    }
+
+    public function removeRegisteredUserEmail(User $user): void
+    {
+        ConfirmedEmail::where('email', $user->email)->delete();
     }
 }

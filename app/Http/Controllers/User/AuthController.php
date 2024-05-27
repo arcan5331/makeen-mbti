@@ -63,6 +63,9 @@ class AuthController extends Controller
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
         ]);
+
+        $this->confirmationService->removeRegisteredUserEmail($user);
+
         return new LoginResource($user);
     }
 
