@@ -9,34 +9,49 @@ use Illuminate\Database\MultipleRecordsFoundException;
 
 class EmailConfirmation
 {
+    static EmailConfirmation $instance;
 
+    private function __construct()
+    {
+
+    }
+
+    public static function getInstance(): EmailConfirmation
+    {
+        if (isset(self::$instance)) {
+            return self::$instance;
+        }
+        return new EmailConfirmation();
+    }
 
     /**
      * @throws ConfirmationCodeNotCorrectException
      * @throws ModelNotFoundException
      * @throws MultipleRecordsFoundException
+     * @throws \Throwable
      */
-    public static function confirmEmail(string $email, $code): void
+    public function confirmEmail(string $email, $code): void
     {
         $model = ConfirmedEmail::where('email', $email)->sole();
-        self::EmailConfirmation($model, $code);
+        $this->EmailConfirmation($model, $code);
     }
 
     /**
      * @throws ConfirmationCodeNotCorrectException
+     * @throws \Throwable
      */
-    protected static function EmailConfirmation(ConfirmedEmail $model, $code): void
+    protected function EmailConfirmation(ConfirmedEmail $model, $code): void
     {
         throw_unless($model->code === $code, ConfirmationCodeNotCorrectException::class);
         $model->confirm();
     }
 
-    public static function beginConfirmationProcess($email): void
+    public function beginConfirmationProcess($email): void
     {
         $model = ConfirmedEmail::firstOrCreate(['email' => $email]);
         $model->resetModel();
         $code = $model->generateCode();
-        self::sendValidationEmail($code);
+        $this->sendValidationEmail($code);
     }
 
     protected function sendValidationEmail($code)

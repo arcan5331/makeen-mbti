@@ -16,15 +16,25 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->confirmationService = EmailConfirmation::getInstance();
+    }
+
+    protected EmailConfirmation $confirmationService;
+
     public function emailConfirmation(validateEmailRequest $request)
     {
+
         try {
             if ($request->input('code') !== null) {
-                EmailConfirmation::confirmEmail($request->input('email'), $request->input('code'));
+                $this->confirmationService->confirmEmail($request->input('email'), $request->input('code'));
                 return response()->json(['message' => __('email confirmed')]);
+
             } else {
-                EmailConfirmation::beginConfirmationProcess($request->input('email'));
+                $this->confirmationService->beginConfirmationProcess($request->input('email'));
                 return response()->json(['message' => __('email was sent.')]);
+
             }
         } catch (ModelNotFoundException) {
             return response()->json(['message' => __('email not found!')], 404);
