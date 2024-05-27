@@ -19,7 +19,7 @@ class LoginResource extends JsonResource
                     'phone_number' => $this->phone_number,
                     'email' => $this->email,
                 ],
-                'toke' => $this->createToken(now()),
+                'token' => $this->createToken(now())->plainTextToken,
             ]
         ];
     }
