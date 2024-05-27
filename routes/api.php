@@ -23,6 +23,7 @@ Route::group([
 ], function () {
     Route::post('register', 'registerUser');
     Route::post('validate-email', 'emailConfirmation');
+    Route::post('login', 'login');
 });
 
 Route::group([

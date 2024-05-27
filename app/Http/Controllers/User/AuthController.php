@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Exceptions\ConfirmationCodeNotCorrectException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\validateEmailRequest;
 use App\Http\Resources\LoginResource;
@@ -54,5 +55,19 @@ class AuthController extends Controller
         ]);
         return new LoginResource($user);
     }
+
+    public function login(LoginRequest $request)
+    {
+        if (auth()->attempt(
+            $request->validated()
+        )) {
+            return new LoginResource(auth()->user());
+        } else {
+            return response()->json([
+                'message' => __('your email or password wes wrong.')
+            ], 422);
+        }
+    }
+
 
 }
