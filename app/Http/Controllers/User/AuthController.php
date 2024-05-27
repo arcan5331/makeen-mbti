@@ -20,6 +20,7 @@ class AuthController extends Controller
         try {
             if ($request->input('code') !== null) {
                 EmailConfirmation::confirmEmail($request->input('email'), $request->input('code'));
+                return response()->json(['message' => __('email confirmed')]);
             } else {
                 EmailConfirmation::beginConfirmationProcess($request->input('email'));
                 return response()->json(['message' => __('email was sent.')]);
@@ -33,8 +34,13 @@ class AuthController extends Controller
         } catch (MultipleRecordsFoundException $e) {
             logger($e->getMessage());
             return response()->json(['message' => __('there was an error.')], 500);
+        } catch (\Throwable $e) {
+            logger($e->getMessage());
+            return response()->json([
+                'message' => __('there was an error.'),
+                'error message' => $e->getMessage()
+            ], 500);
         }
-        return response()->json(['message' => __('email confirmed')]);
     }
 
     public function registerUser(UserRegisterRequest $request)
