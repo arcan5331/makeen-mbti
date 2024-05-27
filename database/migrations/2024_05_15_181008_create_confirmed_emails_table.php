@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('email', 100)->unique();
             $table->string('code', 4)->nullable();
             $table->boolean('is_confirmed')->default(false);
+            $table->timestamps();
         });
     }
 
