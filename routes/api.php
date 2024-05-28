@@ -31,6 +31,6 @@ Route::group([
     'prefix' => 'test',
     'controller' => \App\Http\Controllers\TestControlLer::class,
 ], function () {
-    Route::get('{test_name}', 'show');
-    Route::post('{test_name}', 'fill');
+    Route::get('{test}', 'show');
+    Route::post('{test}', 'fill');
 });

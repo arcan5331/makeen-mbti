@@ -27,6 +27,11 @@ class Test extends Model
 
     private bool $hasTypePairs = false;
 
+    public function getRouteKeyName(): string
+    {
+        return 'name';
+    }
+
     protected function setTypePairs(bool $value): static
     {
         $this->hasTypePairs = $value;

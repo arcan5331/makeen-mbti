@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 
 class TestControlLer extends Controller
 {
-    public function show($test_name)
+    public function show(Test $test)
     {
-        return new TestResource(Test::where('name', $test_name)->sole());
+        return new TestResource($test);
     }
 
-    public function fill($test_name)
+    public function fill(Request $request, Test $test)
     {
         // todo: make the test filling part
         return ["message" => 'its under development'];
