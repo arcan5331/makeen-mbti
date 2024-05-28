@@ -27,6 +27,8 @@ class Test extends Model
 
     private bool $hasTypePairs = false;
 
+    protected string $questionPrefix = "q-";
+
     public function getRouteKeyName(): string
     {
         return 'name';
@@ -55,5 +57,21 @@ class Test extends Model
     {
         return $this->hasMany(Score::class);
     }
+
+    public function formatQuestionIdentifier(int $number): string
+    {
+        return $this->questionPrefix . $number;
+    }
+
+    public function countQuestionAnswers($questionNumber): int
+    {
+        return collect($this->getQuestionFromId($questionNumber)->answers)->count();
+    }
+
+    public function getQuestionFromId(int $number)
+    {
+        return $this->questions->{$this->formatQuestionIdentifier($number)};
+    }
+
 
 }
