@@ -10,7 +10,7 @@ use Illuminate\Database\MultipleRecordsFoundException;
 
 class EmailConfirmation
 {
-    static EmailConfirmation $instance;
+    protected static EmailConfirmation $instance;
 
     private function __construct()
     {
