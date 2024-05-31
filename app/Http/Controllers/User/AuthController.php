@@ -9,19 +9,20 @@ use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\validateEmailRequest;
 use App\Http\Resources\LoginResource;
 use App\Models\User;
-use App\Services\EmailConfirmation;
+use App\Services\EmailConfirmationService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\MultipleRecordsFoundException;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function __construct()
+    protected EmailConfirmationService $confirmationService;
+
+    public function __construct(EmailConfirmationService $service)
     {
-        $this->confirmationService = EmailConfirmation::getInstance();
+        $this->confirmationService = $service;
     }
 
-    protected EmailConfirmation $confirmationService;
 
     public function emailConfirmation(validateEmailRequest $request)
     {

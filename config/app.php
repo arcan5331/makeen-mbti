@@ -172,6 +172,7 @@ return [
          * Developer Service Providers ...
          */
         App\Providers\TestScoringServiceProvider::class,
+        App\Providers\EmailConfirmationServiceProvider::class,
     ])->toArray(),
 
     /*

@@ -8,22 +8,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\MultipleRecordsFoundException;
 
-class EmailConfirmation
+class EmailConfirmationService
 {
-    protected static EmailConfirmation $instance;
-
-    private function __construct()
-    {
-
-    }
-
-    public static function getInstance(): EmailConfirmation
-    {
-        if (isset(self::$instance)) {
-            return self::$instance;
-        }
-        return new EmailConfirmation();
-    }
 
     /**
      * @throws ConfirmationCodeNotCorrectException
