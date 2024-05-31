@@ -29,6 +29,8 @@ class Test extends Model
 
     protected string $questionPrefix = "q-";
 
+    protected string $answerPrefix = "a-";
+
     public function getRouteKeyName(): string
     {
         return 'name';
@@ -63,6 +65,12 @@ class Test extends Model
         return $this->questionPrefix . $number;
     }
 
+    public function formatAnswerIdentifier(int $number): string
+    {
+        return $this->answerPrefix . $number;
+    }
+
+
     public function countQuestionAnswers($questionNumber): int
     {
         return collect($this->getQuestionFromId($questionNumber)->answers)->count();
@@ -71,6 +79,11 @@ class Test extends Model
     public function getQuestionFromId(int $number)
     {
         return $this->questions->{$this->formatQuestionIdentifier($number)};
+    }
+
+    public function accessQuestionAnswer(int $questionId, int $answerNo)
+    {
+        return $this->answers->{$this->formatQuestionIdentifier($questionId)}->{$this->formatAnswerIdentifier($answerNo)};
     }
 
 
